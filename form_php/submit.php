@@ -1,14 +1,10 @@
 <?php
 session_start();
-echo "visa rejection".$_SESSION["visa_rejection"];
-// setcookie("test_cookie", "test", time() + 3600, '/');
-// print_r($_POST);
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
    <head>
-      <title> Bootstrap </title>
+      <title> Confirmation Page </title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <link href="css/bootstrap.min.css" rel="stylesheet" />
@@ -102,7 +98,7 @@ echo "visa rejection".$_SESSION["visa_rejection"];
                                  $_SESSION["birthMonth"] = $_POST['dateofbirthmonth'];
                                  $_SESSION["birthYear"] = $_POST['dateofbirthyear'];
                                  echo $_SESSION["birthDate"]."-".$_SESSION["birthMonth"]."-".$_SESSION["birthYear"];
-                              ?>
+                              ?> 
                      </div>
                      <div class="col-md-4 padding-top-10">
                         <label class="control-label">Marital Status:</label>
@@ -301,28 +297,5 @@ echo "visa rejection".$_SESSION["visa_rejection"];
 
       <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
       <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-<?php 
-// $_SESSION['educationOfuser'] = $_POST['eduQual'];  
-// print_r($_SESSION['educationOfuser'][0]['fieldSubjects']); 
-// $key = 'fieldSubjects';
-// $value = $array[$key];
-// print $value;
-// $second = array_slice($_POST['eduQual'], 1); 
-// print_r($second)
-// foreach($_POST['eduQual'] as $x => $x_value) {
-//     echo "Key=" . $x . ", Value=" . $x_value;
-//     echo "<br>";
-// // }
-// for ($row = 0; $row < 4; $row++) {
-//   echo "<p><b>Row number $row</b></p>";
-//   echo "<ul>";
-//   for ($col = 0; $col < 3; $col++) {
-//     echo "<li>".$_POST['eduQual'][$row]."</li>";
-//   }
-//   echo "</ul>";
-// }
-
-?>
-
    </body>
 </html>

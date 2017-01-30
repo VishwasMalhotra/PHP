@@ -6,11 +6,12 @@ function echo_session_variable($key) {
    echo $_SESSION[$key];
  }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
    <head>
-      <title> Bootstrap </title>
+      <title> Student Information Form </title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <link href="css/bootstrap.min.css" rel="stylesheet" />
@@ -24,7 +25,7 @@ function echo_session_variable($key) {
          <div class="container">
             <div class="navbar-header">
                <a class="navbar-brand" href="#">
-               <img src="8.png" class="logo" />
+               <img src="companyLogo.png" class="logo" />
                </a>
             </div>
          </div>
@@ -111,9 +112,9 @@ function echo_session_variable($key) {
                            <label class="control-label">Month:</label>
                            <select name="dateofbirthmonth">
                               <?php 
-                                 $months = array('January', 'Febuary', 'March', 'April' , 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+                                 $months = array('','January', 'Febuary', 'March', 'April' , 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
                               if ($_SESSION["birthMonth"] != NULL) {
-                                 for ($i=0; $i < count($months); $i++) {
+                                 for ($i=1; $i < count($months); $i++) {
                                     if ($_SESSION["birthMonth"] == $i) { 
                                        echo "<option value='$i' selected>"."$months[$i]"."</option>";
                                     } else {
@@ -122,7 +123,7 @@ function echo_session_variable($key) {
                                  }
                                     echo "<option value='' disabled>MM</option>";
                               } else {
-                                 for ($i=0; $i < count($months); $i++) { 
+                                 for ($i=1; $i < count($months); $i++) { 
                                     echo "<option value='$i'>"."$months[$i]"."</option>";
                                  }
                                  echo "<option value='' selected disabled>MM</option>";
@@ -225,7 +226,7 @@ function echo_session_variable($key) {
                            <select name="preferredMonth">
                               <?php 
                               if ($_SESSION["preferredClientMonth"] != NULL) {
-                                 for ($i=0; $i < count($months); $i++) {
+                                 for ($i=1; $i < count($months); $i++) {
                                     if ($_SESSION["preferredClientMonth"] == $i) { 
                                        echo "<option value='$i' selected>"."$months[$i]"."</option>";
                                     } else {
@@ -234,7 +235,7 @@ function echo_session_variable($key) {
                                  }
                                     echo "<option value='' disabled>MM</option>";
                                     } else {
-                                       for ($i=0; $i < count($months); $i++) { 
+                                       for ($i=1; $i < count($months); $i++) { 
                                           echo "<option value='$i'>"."$months[$i]"."</option>";
                                        }
                                        echo "<option value='' selected disabled>MM</option>";
@@ -316,8 +317,13 @@ function echo_session_variable($key) {
                             for ($row=0; $row < count($levelOfEdu); $row++) { 
                               echo "<tr>"."<th>".$levelOfEdu[$row];
                              for ($cell=0; $cell < 5; $cell++) {
-                               echo "<td><input type='text' class='form-control table' name='eduQual[$row][".$x[$cell]."]'
+                                 if (isset($_SESSION['educationOfuser'][$row][$x[$cell]]))
+                                 {
+                                    echo "<td><input type='text' class='form-control table' name='eduQual[$row][".$x[$cell]."]'
                                value='".$_SESSION['educationOfuser'][$row][$x[$cell]]."'/>";
+                                 } else{
+                               echo "<td><input type='text' class='form-control table' name='eduQual[$row][".$x[$cell]."]'/>";
+                                 }
                              }
                             }
                         ?>
@@ -350,8 +356,13 @@ function echo_session_variable($key) {
                             for ($row=0; $row < 1; $row++) { 
                               echo "<tr>";
                              for ($cell=0; $cell < 7; $cell++) {
+                               if (isset($_SESSION['foreignTest'][$cell][$y[$cell]]))
+                                 {                              
                                echo "<td><input type='text' class='form-control table' name='ielts[$cell][".$y[$cell]."]'
                                value='".$_SESSION['foreignTest'][$cell][$y[$cell]]."'/>";
+                            } else{
+                               echo "<td><input type='text' class='form-control table' name='ielts[$cell][".$y[$cell]."]'/>";
+                            }
                              }
                             }
                         ?>
@@ -381,8 +392,13 @@ function echo_session_variable($key) {
                             for ($row=0; $row < 1; $row++) { 
                               echo "<tr>";
                              for ($cell=0; $cell < 6; $cell++) {
+                               if (isset($_SESSION['userExperience'][$cell][$z[$cell]]))
+                                 {                              
                                echo "<td><input type='text' class='form-control table' name='experience[$cell][".$z[$cell]."]'' value='".$_SESSION['userExperience'][$cell][$z[$cell]]."'/>";
+                             } else{
+                               echo "<td><input type='text' class='form-control table' name='experience[$cell][".$z[$cell]."]'/>";                              
                              }
+                          }
                            }
                         ?>
                      </tbody>
