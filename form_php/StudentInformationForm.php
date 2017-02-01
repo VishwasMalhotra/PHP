@@ -163,7 +163,7 @@ function echo_session_variable($key) {
                         <div class="row">
                           <div class="col-md-6">
                               <label for="single">
-                                 <input type="radio" name="maritalStatus" id="single" value="Single" />
+                                 <input type="radio" name="maritalStatus" id="single" value="Single" checked />
                                  Single
                               </label>
                           </div>
@@ -287,7 +287,7 @@ function echo_session_variable($key) {
                           </div>
                           <div class="col-md-6">
                              <label for="no_rejection">
-                                <input type="radio" class="visa" name="VisaRejection" id="no_rejection" value="No" />
+                                <input type="radio" class="visa" name="VisaRejection" id="no_rejection" value="No" checked />
                                  No
                               </label>
                           </div>

@@ -141,7 +141,7 @@ session_start();
     Know more on <a href="https://www.educations.com/">our website.</a>
   </p>
   <p class="lead">
-    <a class="btn btn-primary btn-sm" href="#" role="button">Continue to admin login</a>
+    <a class="btn btn-primary btn-sm" href="login" role="button">Continue to admin login</a>
   </p>
   </center>
 </div>  
