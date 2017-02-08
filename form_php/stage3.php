@@ -57,6 +57,7 @@ session_start();
 
                   $conn->query($sql);
 
+                  
 
                   if($_SESSION["relationshipStatus"] == 'Married'){
 
@@ -69,6 +70,18 @@ session_start();
                   '{$_SESSION["spouseEducation"]}');";
 
                   $conn->query($sql);                  
+                  }
+                  else{
+
+                  $sql = "INSERT INTO maritalinfo(users_id, marritalStatus, spouseName, dateofMarriage, spouseOccupation, spouseEducation)
+                  VALUES ('$userId',
+                  '{$_SESSION["relationshipStatus"]}',
+                  'NULL',
+                  'NULL',
+                  'NULL',
+                  'NULL');"; 
+                  $conn->query($sql);                  
+
                   }
 
 
@@ -145,13 +158,11 @@ session_start();
   </p>
   </center>
 </div>  
-    
     <div class="footer-bottom">
         <div class="container">
             <p class="pull-left"> Copyright © <strong>Company Name Pvt. Ltd.</strong> All right reserved. </p>
         </div>
-    </div>
-</footer>             
+    </div>            
 
 <?php
 session_unset(); 
