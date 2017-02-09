@@ -19,8 +19,17 @@ session_start();
 		<center>
       	<h2>Welcome <?php echo $_SESSION['login_username']; ?>!</h2> 
       	<h3><a href = "logout.php">Sign Out</a></h3>
+      	<hr>
+	    <form  method="get" action="welcome.php"> 
+	      <input  type="text" name="quickSearch" placeholder="Quick Search"> 
+	      <input  type="submit" name="submit" value="Search"> 
+	    </form>
 		</center>
 		</div>
+		<?php 
+			if (!$_GET || $_GET['quickSearch']  == NULL) {
+			
+		?>
       <div style="padding-top: 50px; " class= "container">
          <div class="panel panel-default">
             <div class="panel-heading"><b>Users</b></div>
@@ -61,8 +70,36 @@ session_start();
             </div>
          </div>
       </div>
+<?php 
+}
+ else {
+?>
+      	<a class="btn btn-primary btn-sm" href="welcome" role="button">Clear all Filters</a>
 
-     
+     <?php
+      $searchstring = $_GET['quickSearch'];
+
+         $sql = "SELECT * FROM users WHERE id IN (SELECT users.id FROM users JOIN address ON users.id = address.users_id JOIN preference ON users.id = preference.users_id JOIN maritalinfo ON users.id = maritalinfo.users_id JOIN educationqualification ON users.id = educationqualification.users_id JOIN experience ON users.id = experience.users_id JOIN foreigntest ON users.id = foreigntest.users_id WHERE `name` LIKE '%$searchstring%' OR email LIKE '%$searchstring%' OR phoneNumber LIKE '%$searchstring%' OR detailedAddress LIKE '%$searchstring%' OR city LIKE '%$searchstring%' OR state LIKE '%$searchstring%' OR level LIKE '%$searchstring%' OR fieldSubjects LIKE '%$searchstring%' OR Board LIKE '%$searchstring%' OR employerName LIKE '%$searchstring%' OR employerAddress LIKE '%$searchstring%' OR designation LIKE '%$searchstring%' OR ieltsOrToefl LIKE '%$searchstring%' OR marritalStatus LIKE '%$searchstring%' OR spouseName LIKE '%$searchstring%' OR preferredCity LIKE '%$searchstring%' group BY users.id)";
+   
+            $result = $conn->query($sql);
+
+         if ($result->num_rows > 0) {
+         while($row = $result->fetch_assoc()) {
+  ?>
+        <ul>
+           <li>
+           Name:
+              <?php print_r($row);
+               ?>
+           </li>
+        </ul>
+  <?php 
+         }
+            }
+  ?> 
+  <?php
+  	}
+   ?>   
 
 
 
