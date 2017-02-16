@@ -16,7 +16,7 @@ session_start();
          <div class="container">
             <div class="navbar-header">
                <a class="navbar-brand" href="#">
-               <img src="8.png" class="logo" />
+               <img src="companyLogo.png" class="logo" />
                </a>
             </div>
          </div>
@@ -282,11 +282,11 @@ session_start();
                </div>
                <div class="row">
                   <div class="col-md-6">
-                     <button type="submit" form="form1" value="Submit" class="btn btn-success submit">Confirm!</button>
+                     <button type="submit" form="form1" value="Submit" class="btn btn-success submit">Confirm</button>
                   </div>
                   <div class="col-md-6">
                      <a class="btn btn-danger submit" href="http://localhost/form-php/StudentInformationForm.php">
-                     Go Back!
+                     Go Back
                      </a> 
                         
                      </div>

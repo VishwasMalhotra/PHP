@@ -88,22 +88,26 @@ session_start();
                $levelOfEdu = array('Matric(10th)', '10+2', 'Graduation', 'Post-Graduation', 'Diploma', 'Any Other Qualification');
                $x = array('fieldSubjects', 'yearOfPassing', 'percentage', 'backlog', 'Board');
                $str= '';
+               // $allNull = 0;
                 for ($row=0; $row < count($levelOfEdu); $row++) { 
                   for ($cell=0; $cell < 5; $cell++) {
 
                      if ($_SESSION['educationOfuser'][$row][$x[$cell]] == '') {
                         $str .= 'NULL,';
+                        // $allNull ++;
                      } else {
                        $str .= '\''.$_SESSION['educationOfuser'][$row][$x[$cell]] .'\',';
                      }
+                  // $test = $allNull;
                   }
-
                   
 
                   $xyz = rtrim($str, ",");
                   $sql = "INSERT INTO educationqualification(users_id, level, fieldSubjects, yearOfPassing, percentage, backlog, Board)
                   VALUES('$userId','".$levelOfEdu[$row]."',$xyz);";
                   $str = '';
+                  // echo count($allNull);
+                  // echo $test;
                   $conn->query($sql);
                  }
                   
@@ -147,11 +151,11 @@ session_start();
 <div class="jumbotron text-md-center">
   <center>
      <h1>Thank You!</h1>
-  <p><strong>Thanks <?php echo $_SESSION["firstname"]; ?> for contacting us!
-      We will get back to you as soon as possible.</strong></p>
+  <p>Thanks <strong><?php echo $_SESSION["firstname"]; ?> </strong> for contacting us!
+      We will get back to you as soon as possible.</p>
   <hr>
   <p>
-    Know more on <a href="https://www.educations.com/">our website.</a>
+    Know more on <a href="https://www.vinsol.com/">our website.</a>
   </p>
   <p class="lead">
     <a class="btn btn-primary btn-sm" href="login" role="button">Continue to admin login</a>

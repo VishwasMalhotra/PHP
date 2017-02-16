@@ -16,7 +16,8 @@
       <div class="container">
          <center>
             <h2>Welcome <?php echo $_SESSION['login_username']; ?>!</h2>
-            <h3><a href = "logout.php">Sign Out</a></h3>
+            <a class="btn btn-info" href = "welcome.php">Back to users</a>
+            <a class="btn btn-danger" href = "logout.php">Sign Out</a>
          </center>
       </div>
       <div style="padding-top: 50px; " class= "container">
