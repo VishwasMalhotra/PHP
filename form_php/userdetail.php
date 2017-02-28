@@ -1,7 +1,29 @@
-<?php
+ <?php
    session_start();
     include("studentInfoConfig.php");
    $userdetail_id = $_GET['id'];
+   if (!isset($userdetail_id)) {
+      header("Location: login.php");
+   }
+   if(!isset($_SESSION["login_username"]))
+{
+    header("Location: login.php");
+}
+
+   $testarray = array();
+   $sql = "SELECT * FROM users";
+   $result = $conn->query($sql);
+   if ($result->num_rows > 0) {
+   while($row = $result->fetch_assoc()) { 
+   array_push($testarray, $row['id']);
+   ?>
+
+   <?php
+}
+}
+   if (!is_numeric($userdetail_id) || !in_array($userdetail_id, $testarray )) {
+      header ("Location: noinfo.php");
+   }
    ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -302,6 +324,25 @@
             </div>
          </div>
       </div>
+      <?php
+         $sql = "SELECT * FROM users WHERE id =$userdetail_id";
+         $result = $conn->query($sql);
+
+         if ($result->num_rows > 0) {
+         $row = $result->fetch_assoc();    
+         ?>
+
+      <div class= "container">
+         <div class="panel panel-default">
+            <div class="panel-heading"><b>User File</b></div>
+            <div class="panel-body">
+               <a href="download.php?file=file:///<?php echo $row['userfile'] ?>">Download CV</a>
+            </div>
+         </div>
+      </div>
+      <?php
+         }
+      ?>
       <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
       <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
    </body>

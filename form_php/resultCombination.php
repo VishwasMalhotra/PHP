@@ -1,6 +1,8 @@
 <?php
  include("studentInfoConfig.php");
-
+if (!isset($_POST['submit'])) {
+  header("Location: combinationSearch.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

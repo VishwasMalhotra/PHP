@@ -1,5 +1,10 @@
 <?php
 session_start();
+if (!isset($_POST['submit'])) {
+	header("Location: noform.php");
+  exit();
+	
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,16 +28,19 @@ session_start();
                   die("Connection failed: " . $conn->connect_error);
                   } 
 
+                  $_SESSION['fileToUpload'] = $conn->real_escape_string($_SESSION['fileToUpload']);
+
                   $sql = "START TRANSACTION";
                   $conn->query($sql);
 
 
-                  $sql = "INSERT INTO users (DOB, name, email, phoneNumber, visa_rejection)
+                  $sql = "INSERT INTO users (DOB, name, email, phoneNumber, visa_rejection, userfile)
                   VALUES ('{$_SESSION['birthYear']}"."/{$_SESSION['birthMonth']}"."/{$_SESSION['birthDate']}',
                   '{$_SESSION["firstname"]} "."{$_SESSION["lastname"]}',
                   '{$_SESSION["contact_email"]}',
                   '{$_SESSION["contact_phone"]}',
-                  '{$_SESSION["visa_rejection"]}');";
+                  '{$_SESSION["visa_rejection"]}',
+                  '{$_SESSION['fileToUpload']}');";
 
                   $query = $conn->query($sql);
                   $userId= $conn->insert_id;

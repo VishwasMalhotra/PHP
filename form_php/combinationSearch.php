@@ -107,7 +107,7 @@
                   <div class="row padding-top-10">
                   	<div class="col-md-12">
                   		
-               <button type="submit" form="form1" value="Submit" class="btn btn-success ">Search</button>
+               <button type="submit" form="form1" value="Submit" name="submit" class="btn btn-success ">Search</button>
                   	</div>
                   </div>
                   </center>

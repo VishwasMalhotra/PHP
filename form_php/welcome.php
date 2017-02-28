@@ -1,8 +1,11 @@
 <?php
  include("studentInfoConfig.php");
-
 session_start();
+if(!isset($_SESSION["login_username"]))
+{
+    header("Location: login.php");
 
+}
 
 ?>
 <!DOCTYPE html>
@@ -90,10 +93,13 @@ session_start();
 
         <ul>
            <li>
+           <?php
+                  $data = array('id'=>$row['id']);
+
+           ?>
            Name:
-              <?php echo $row['name'];
-               ?>
-           </li>
+              <a href="userdetail.php?<?php echo http_build_query($data, '', '&amp;');?>"><?php echo $row['name']; ?></a>
+          </li>
         </ul>
   <?php 
          }
@@ -102,9 +108,6 @@ session_start();
   <?php
   	}
    ?>   
-
-
-
     	 <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
       <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
    </body>

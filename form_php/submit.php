@@ -1,5 +1,8 @@
 <?php
 session_start();
+if (!isset($_POST['submit'])) {
+	header("Location: noform.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -281,8 +284,46 @@ session_start();
                   </table>
                </div>
                <div class="row">
+                  <div class="col-md-12">
+                     <?php
+                    if(isset($_SESSION['fileToUpload'])) {
+                               $pathString = $_SESSION['fileToUpload'];
+                             $cutpathString = substr($pathString, strpos($pathString, ".tmp") + 4);
+                      echo "You have selected the file :"."<label>".$cutpathString."</label>";
+
+                    } else  {
+
+                    $fileLocation = "C:\wamp64\/tmp\php2B96.tmp";
+                    $fileName = $fileLocation . basename($_FILES["fileToUpload"]["name"]);
+                    $uploadVariable = 1;
+
+                    $fileName = preg_replace('/\s+/', '_', $fileName);
+                    if(isset($_POST["submit"])) {
+                            $uploadVariable = 1;
+                        } else {
+                            $uploadVariable = 0;
+                        }
+                    if ($uploadVariable == 0) {
+                        echo "You haven't selected any file to upload.";
+                    } else {
+                        if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $fileName)) {
+                            $toTrim = basename($_FILES["fileToUpload"]["tmp_name"]);
+                            $trimmerName = preg_replace('/\s+/', '_', $toTrim);
+                            echo "You have selected the file :"."<label>".basename($_FILES["fileToUpload"]["name"])."</label>";
+                          $_SESSION['fileToUpload'] = $fileName;
+                          $_SESSION['fileNametoDisplay'] = basename($_FILES["fileToUpload"]["name"]);
+                            
+                        } else {
+                            echo "<label>You haven't selected any file to upload.</label>";
+                        }
+                    }                    
+                    }
+                     ?>
+                </div>
+             </div>
+               <div class="row">
                   <div class="col-md-6">
-                     <button type="submit" form="form1" value="Submit" class="btn btn-success submit">Confirm</button>
+                     <button type="submit" form="form1" name="submit" value="Submit" class="btn btn-success submit">Confirm</button>
                   </div>
                   <div class="col-md-6">
                      <a class="btn btn-danger submit" href="http://localhost/form-php/StudentInformationForm.php">
@@ -294,7 +335,6 @@ session_start();
             </div>
          </div>
       </div>
-
       <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
       <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
    </body>

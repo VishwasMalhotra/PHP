@@ -6,7 +6,6 @@ function echo_session_variable($key) {
    echo $_SESSION[$key];
  }
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,6 +18,8 @@ function echo_session_variable($key) {
       <link rel="stylesheet" type="text/css" href="stylesheet.css" />
       <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
       <script src="tableAddRow.js"></script>
+      <script src="unsetjquery.js"></script>
+
    </head>
    <body>
       <nav class="navbar navbar-default" role="navigation">
@@ -30,7 +31,7 @@ function echo_session_variable($key) {
             </div>
          </div>
       </nav>
-      <form id="form1" action="submit.php" method="POST">
+      <form id="form1" action="submit.php" method="POST" enctype="multipart/form-data">
       <div class= "container padding-top-10">
          <div class="panel panel-default">
             <div class="panel-heading">Student Information Form</div>
@@ -329,7 +330,7 @@ function echo_session_variable($key) {
                         ?>
                      </tbody>
                   </table>
-                     <a id="createRowQualification" class="btn btn-primary">+</a>
+                     <!-- <a id="createRowQualification" class="btn btn-primary">+</a> -->
                </div>
             </div>
          </div>
@@ -372,11 +373,11 @@ function echo_session_variable($key) {
             </div>
          </div>
       </div>
-     <div class= "container padding-top-10">
+     <div class= "container padding-top-10 ">
          <div class="panel panel-default">
             <div class="panel-heading">Experience (if any)</div>
             <div class="panel-body">
-               <div class="table-responsive">
+               <div class="table-responsive toappend">
                   <table id="myTable" class="table table-bordered table-condensed">
                      <tbody>
                         <tr>
@@ -403,12 +404,36 @@ function echo_session_variable($key) {
                         ?>
                      </tbody>
                   </table>
-               <div class="row padding-top-10">
-                  <div class="col-md-12">
-                  </div>
-               </div>
             </div>
-               <button type="submit" form="form1" value="Submit" class="btn btn-success submit">Submit</button>
+            <?php 
+               if (isset($_SESSION['fileToUpload'])) {
+            ?>
+      <div class="row padding-top-10 hidethis">
+      <div class="col-md-4">
+         <label> File selected: </label>
+         <?php
+         $pathString = $_SESSION['fileToUpload'];
+         $cutpathString = substr($pathString, strpos($pathString, ".tmp") + 4);
+         ?>
+         <input type="text" readonly value="<?php echo $cutpathString ?>"> 
+         <a id="clear" class="btn btn-danger">x</a>
+      </div>
+      </div>
+      <?php
+      } 
+      else {
+      ?>
+            <div class="row padding-top-10">
+      <div class="col-md-4">
+         <label> Select file to upload: </label>
+         <input type="file" name="fileToUpload" id="fileToUpload" accept="application/pdf"> <br/>
+      </div>
+      </div>
+
+      <?php
+      }
+      ?>      
+               <br/><button type="submit" form="form1" value="Submit" name="submit" class="btn btn-success submit">Submit</button>
          </div>
       </div> 
    </form>
