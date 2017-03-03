@@ -2,8 +2,7 @@
 session_start();
 if (!isset($_POST['submit'])) {
 	header("Location: noform.php");
-  exit();
-	
+  exit();	
 }
 ?>
 <!DOCTYPE html>
@@ -163,10 +162,10 @@ if (!isset($_POST['submit'])) {
       We will get back to you as soon as possible.</p>
   <hr>
   <p>
-    Know more on <a href="https://www.vinsol.com/">our website.</a>
+    Know more on <a href="http://52.40.58.82/">our website.</a>
   </p>
   <p class="lead">
-    <a class="btn btn-primary btn-sm" href="login" role="button">Continue to admin login</a>
+    <a class="btn btn-primary btn-sm" href="login.php" role="button">Continue to admin login</a>
   </p>
   </center>
 </div>  

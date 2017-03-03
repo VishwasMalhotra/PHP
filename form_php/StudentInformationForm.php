@@ -31,6 +31,12 @@ function echo_session_variable($key) {
             </div>
          </div>
       </nav>
+      <div class="container bread">
+         <ul class="breadcrumb">
+            <li><a href="index.html"> Home </a></li>
+            <li class="active"> Student Information Form </li>
+         </ul>
+      </div>   
       <form id="form1" action="submit.php" method="POST" enctype="multipart/form-data">
       <div class= "container padding-top-10">
          <div class="panel panel-default">
@@ -39,16 +45,16 @@ function echo_session_variable($key) {
                   <label for="firstName" class="control-label">Name:</label>
                   <div class="row">
                      <div class="col-md-6 padding-top-10">
-                     <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First" value="<?php echo_session_variable('firstname'); ?>" />                      
+                     <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First" value="<?php echo_session_variable('firstname'); ?>" required/>                      
                      </div>
                      <div class="col-md-6 padding-top-10">
-                        <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Last" value="<?php echo_session_variable('lastname'); ?>"/>
+                        <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Last" value="<?php echo_session_variable('lastname'); ?>" required/>
                      </div>
                   </div>
                   <label for="address1" class="control-label padding-top-10">Address:</label>
                   <div class="row padding-top-10">
                      <div class="col-md-12">
-                        <input type="text" class="form-control" id="address1" name="address1" placeholder="Address Line 1" value="<?php echo_session_variable('addressOne'); ?>"/>
+                        <input type="text" class="form-control" id="address1" name="address1" placeholder="Address Line 1" value="<?php echo_session_variable('addressOne'); ?>" required/>
                      </div>
                   </div>
                   <div class="row padding-top-10">
@@ -59,25 +65,25 @@ function echo_session_variable($key) {
                   <div class="row">
                      <div class="col-md-6 padding-top-10">
                         <label for="city" class="control-label">City:</label>
-                        <input type="text" class="form-control" id="city" name="city" placeholder="Your City" value="<?php echo_session_variable('address_city'); ?>" />
+                        <input type="text" class="form-control" id="city" name="city" placeholder="Your City" value="<?php echo_session_variable('address_city'); ?>" required/>
                      </div>
                      <div class="col-md-2 padding-top-10">
                         <label for="state" class="control-label">State / Region:</label>
-                        <input type="text" class="form-control" name="state" placeholder="Your State / Region" value="<?php echo_session_variable('address_state'); ?>" />
+                        <input type="text" class="form-control" name="state" placeholder="Your State / Region" value="<?php echo_session_variable('address_state'); ?>" required/>
                      </div>
                      <div class="col-md-4 padding-top-10">
                         <label for="zipcode" class="control-label">Zipcode:</label>
-                        <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="Your Zipcode" value="<?php echo_session_variable('address_zipcode'); ?>" />
+                        <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="Your Zipcode" value="<?php echo_session_variable('address_zipcode'); ?>" required/>
                      </div>
                   </div>
                   <div class="row">
                      <div class="col-md-6 padding-top-10">
                         <label for="email" class="control-label">E-mail:</label>
-                        <input type="text" class="form-control" id="email" name="email" placeholder="Your E-mail Address" value="<?php echo_session_variable('contact_email'); ?>"/>
+                        <input type="text" class="form-control" id="email" name="email" placeholder="Your E-mail Address" value="<?php echo_session_variable('contact_email'); ?>" required/>
                      </div>
                      <div class="col-md-6 padding-top-10">
                         <label for="phone" class="control-label">Phone No:</label>
-                        <input type="text" class="form-control" id="phone" name="phone" placeholder="Your Contact Number" value="<?php echo_session_variable('contact_phone'); ?>" />
+                        <input type="text" class="form-control" id="phone" name="phone" placeholder="Your Contact Number" value="<?php echo_session_variable('contact_phone'); ?>" required/>
                      </div>
                   </div>
                   <div class="row padding-top-10">
@@ -89,7 +95,7 @@ function echo_session_variable($key) {
                      <div class="col-md-8">
                         <div class="col-md-2 padding-top-10">
                            <label class="control-label">Date:</label>
-                           <select name="dateofbirthdate">
+                           <select  name="dateofbirthdate">
                            <?php
                               if ($_SESSION["birthDate"] != NULL) {
                                  for ($i=1; $i < 32 ; $i++) {
@@ -111,7 +117,7 @@ function echo_session_variable($key) {
                         </div>
                         <div class="col-md-2 padding-top-10">
                            <label class="control-label">Month:</label>
-                           <select name="dateofbirthmonth">
+                           <select name="dateofbirthmonth" >
                               <?php 
                                  $months = array('','January', 'Febuary', 'March', 'April' , 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
                               if ($_SESSION["birthMonth"] != NULL) {
@@ -134,7 +140,7 @@ function echo_session_variable($key) {
                         </div>
                         <div class="col-md-2 padding-top-10">
                            <label class="control-label">Year:</label>
-                           <select name="dateofbirthyear">
+                           <select name="dateofbirthyear" >
                            <?php
                               if ($_SESSION["birthYear"] != NULL) {
                                  for ($i=2006; $i > 1947 ; $i--) {
@@ -214,7 +220,7 @@ function echo_session_variable($key) {
                               <label for="preferredCity" class="control-label">Preferred City/Country:</label>
                            </div>
                            <div class="col-md-12 padding-top-10">
-                              <input type="text" class="form-control" id="preferredCity" name="preferredCity" placeholder="City / Country" value="<?php echo_session_variable('preferredClientCity'); ?>"  />
+                              <input type="text" class="form-control" id="preferredCity" name="preferredCity" placeholder="City / Country" value="<?php echo_session_variable('preferredClientCity'); ?>"  required/>
                            </div>
                        </div>
                      </div>
@@ -224,7 +230,7 @@ function echo_session_variable($key) {
                               <label for="preferredIntake" class="control-label">Preferred Intake:</label>
                            </div>
                            <div class="col-md-4 padding-top-10">
-                           <select name="preferredMonth">
+                           <select name="preferredMonth" required>
                               <?php 
                               if ($_SESSION["preferredClientMonth"] != NULL) {
                                  for ($i=1; $i < count($months); $i++) {
@@ -245,7 +251,7 @@ function echo_session_variable($key) {
                           </select>                           
                            </div>
                            <div class="col-md-4 padding-top-10">
-                           <select name="preferredYear">
+                           <select name="preferredYear" >
                               <option value="" selected disabled/>YY</option>
                            <?php
                               if ($_SESSION["preferredClientYear"]) {
@@ -270,7 +276,7 @@ function echo_session_variable($key) {
                      </div>
                      <div class="col-md-4 padding-top-10">
                         <label for="preferredStream" class="control-label">Preferred Stream:</label>
-                        <input type="text" class="form-control" id="preferredStream" name="preferredStream" placeholder="IT, Business, etc." value="<?php echo_session_variable('preferredClientStream'); ?>" />
+                        <input type="text" class="form-control" id="preferredStream" name="preferredStream" placeholder="IT, Business, etc." value="<?php echo_session_variable('preferredClientStream'); ?>" required/>
                      </div>
                   </div>
                     <div class="col-md-4 padding-top-10">
@@ -423,7 +429,7 @@ function echo_session_variable($key) {
       } 
       else {
       ?>
-            <div class="row padding-top-10">
+      <div class="row padding-top-10">
       <div class="col-md-4">
          <label> Select file to upload: </label>
          <input type="file" name="fileToUpload" id="fileToUpload" accept="application/pdf"> <br/>

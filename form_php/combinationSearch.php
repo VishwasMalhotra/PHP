@@ -1,10 +1,9 @@
 <?php
  include("studentInfoConfig.php");
  session_start();
-if(!isset($_SESSION["login_username"]))
+ if(!isset($_SESSION["login_username"])) 
 {
-    header("Location: login.php");
-
+header('Location: login.php?redirect=combinationSearch.php');
 }
 ?>
 <!DOCTYPE html>
@@ -16,6 +15,12 @@ if(!isset($_SESSION["login_username"]))
       <link href="css/bootstrap.min.css" rel="stylesheet" />
       <link href="css/basic-template.css" rel="stylesheet" />
       <link rel="stylesheet" type="text/css" href="stylesheet.css" />
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+     <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+      <script src="autocompleteSearch.js"></script>
+      <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
    </head>
    <body>
   <body>
@@ -28,7 +33,7 @@ if(!isset($_SESSION["login_username"]))
             </div>
          </div>
       </nav>
-      <form id="form1" action="resultCombination.php" method="POST">
+      <form id="form1" action="combinationSearch.php" method="GET">
       <div class= "container padding-top-10">
          <div class="panel panel-default">
             <div class="panel-heading">Search Form</div>
@@ -36,7 +41,7 @@ if(!isset($_SESSION["login_username"]))
                   <label for="firstName" class="control-label">Name:</label>
                   <div class="row">
                      <div class="col-md-12 padding-top-10">
-                     <input type="text" class="form-control" name="name" placeholder="Name to search" />                      
+                     <input type="text" id="searchName" class="form-control" name="name" placeholder="Name to search" />                      
                      </div>
                   </div>
 
@@ -71,17 +76,6 @@ if(!isset($_SESSION["login_username"]))
 									}
 								}
 							?>         		
-                     	</select>
-                     </div>
-                     <div class="col-md-6 padding-top-10">
-                        <label class="control-label">Level:</label>
-                     	<select name="level">
-                              <?php 
-                     			$x = array('Any','fieldSubjects', 'yearOfPassing', 'percentage', 'backlog', 'Board');
-                                 for ($i=0; $i < count($x); $i++) { 
-                                    echo "<option value='$i'>"."$x[$i]"."</option>";
-                                 }
-                               ?>                               		
                      	</select>
                      </div>
                   </div>
@@ -120,9 +114,120 @@ if(!isset($_SESSION["login_username"]))
                </div>
                </div>
                </div>
-   </form>   	
+   </form> 
+         <?php 
+         if ($_GET != NULL) {
+         
+      ?>  	
+      <?php
 
-    	 <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+        $name = $_GET['name'];
+        if($name!=null){
+        $nameSearch="and name like '%".$name."%'";
+        } else {
+          $nameSearch = NULL;
+        }
+        $email = $_GET['email'];
+        if ($email!=null) {
+        $emailSearch = "and email like '%".$email."%'";
+        } else {
+          $emailSearch = NULL;
+        }
+
+        $phoneNumber = $_GET['phone'];
+        if ($phoneNumber!=null) {
+        $phoneNumberSearch = "and phoneNumber like '%".$phoneNumber."%'";
+        } else {
+          $phoneNumberSearch = NULL;
+        }
+
+        $address = $_GET['address'];
+        if ($address!=null) {
+        $addressSearch = "and detailedAddress like '%".$address."%'";
+        } else {
+          $addressSearch = NULL;
+        }
+
+        $state = $_GET['state'];
+        if ($state!=null) {
+        $stateSearch = "state like '%".$state."%'";
+        } else {
+          $stateSearch = NULL;
+        }        
+
+        if(isset($_GET['maritalStatus'])) {
+          if (count($_GET['maritalStatus']) == 1) {
+          foreach($_GET['maritalStatus'] as $selected){
+              $maritalStatusSearch = "and marritalStatus like '%".$selected."%'";
+              
+            }
+          }
+          if (count($_GET['maritalStatus']) == 2) {
+            $maritalStatusSearch = "and marritalStatus like '%Single%' or marritalStatus like '%Married%' ";
+          }
+        } else {
+         $maritalStatusSearch = NULL;
+        }
+  ?>
+        
+      <div style="padding-top: 50px; " class= "container">
+         <div class="panel panel-default">
+            <div class="panel-heading"><b>Users</b></div>
+            <div class="panel-body">
+               <div class="table-responsive">
+                  <table id="education" class="table table-bordered table-condensed">
+                     <tbody>
+                        <tr>
+                           <th> Name </th>
+                           <th> Date of Birth </th>
+                           <th> Phone Number </th>
+                           <th> E-Mail </th>
+                        </tr>
+              <?php
+               $sql = "SELECT * FROM users JOIN address ON users.id = address.users_id JOIN maritalinfo ON users.id = maritalinfo.users_id WHERE $stateSearch $nameSearch $emailSearch $phoneNumberSearch $addressSearch $maritalStatusSearch";
+                       $result = $conn->query($sql);
+
+                if ($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                ?>
+                <?php
+                  $data = array('id'=>$row['id']);
+                ?>  
+                 <tr>
+                  <td><a href="userdetail.php?<?php echo http_build_query($data, '', '&amp;');?>"><?php echo $row['name']; ?></a></td>
+                  <td><?php echo $row['DOB']; ?></td>
+                  <td><?php echo $row['phoneNumber']; ?></td>
+                  <td><?php echo $row['email']; ?></td>
+                 </tr>
+                <?php 
+                }
+                  }
+                  else {
+                     // echo 'No Information Found';
+                ?>
+                        <tr>
+                       <td> 
+                       <h4>No information Found</h4> </td>
+                       <td></td>
+                       <td></td>
+                       <td></td>
+                        
+                        </tr>
+
+                        <?php 
+}
+                        ?>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            </div>
+         </div>
+      </div> 
+      <?php 
+        }
+         
+      ?> 
       <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
    </body>
 </html>

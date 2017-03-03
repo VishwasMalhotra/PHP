@@ -1,12 +1,10 @@
 <?php
- include("studentInfoConfig.php");
+include("studentInfoConfig.php");
 session_start();
-if(!isset($_SESSION["login_username"]))
+if(!isset($_SESSION["login_username"])) 
 {
-    header("Location: login.php");
-
+  header("Location: login.php");
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,12 +14,15 @@ if(!isset($_SESSION["login_username"]))
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <link href="css/bootstrap.min.css" rel="stylesheet" />
       <link href="css/basic-template.css" rel="stylesheet" />
+      <link rel="stylesheet" type="text/css" href="stylesheet.css" />
+
    </head>
-   <body>
+   <body>   
 		<div class="container">
 		<center>
       	<h2>Welcome <?php echo $_SESSION['login_username']; ?>!</h2> 
         <a class="btn btn-danger" href = "logout.php">Sign Out</a>
+        <a class="btn btn-info" href = "combinationSearch.php">Search Form</a>
       	<hr>
 	    <form  method="get" action="welcome.php"> 
 	      <input class="form-control" type="text" name="quickSearch" placeholder="Quick Search"><br/>
@@ -78,7 +79,7 @@ if(!isset($_SESSION["login_username"]))
  else {
 ?>
 
-    <a style="margin-left: 25px;" class="btn btn-primary btn-sm" href="welcome" role="button">Clear all Filters</a>
+    <a style="margin-left: 25px;" class="btn btn-primary btn-sm" href="welcome.php" role="button">Clear all Filters</a>
 <br/><br/>
      <?php
       $searchstring = $_GET['quickSearch'];

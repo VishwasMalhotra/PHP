@@ -293,11 +293,9 @@ if (!isset($_POST['submit'])) {
 
                     } else  {
 
-                    $fileLocation = "C:\wamp64\/tmp\php2B96.tmp";
+                    $fileLocation = $_SERVER['DOCUMENT_ROOT']."/tmp/";
                     $fileName = $fileLocation . basename($_FILES["fileToUpload"]["name"]);
                     $uploadVariable = 1;
-
-                    $fileName = preg_replace('/\s+/', '_', $fileName);
                     if(isset($_POST["submit"])) {
                             $uploadVariable = 1;
                         } else {
@@ -307,8 +305,6 @@ if (!isset($_POST['submit'])) {
                         echo "You haven't selected any file to upload.";
                     } else {
                         if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $fileName)) {
-                            $toTrim = basename($_FILES["fileToUpload"]["tmp_name"]);
-                            $trimmerName = preg_replace('/\s+/', '_', $toTrim);
                             echo "You have selected the file :"."<label>".basename($_FILES["fileToUpload"]["name"])."</label>";
                           $_SESSION['fileToUpload'] = $fileName;
                           $_SESSION['fileNametoDisplay'] = basename($_FILES["fileToUpload"]["name"]);
@@ -326,7 +322,7 @@ if (!isset($_POST['submit'])) {
                      <button type="submit" form="form1" name="submit" value="Submit" class="btn btn-success submit">Confirm</button>
                   </div>
                   <div class="col-md-6">
-                     <a class="btn btn-danger submit" href="http://localhost/form-php/StudentInformationForm.php">
+                     <a class="btn btn-danger submit" href="StudentInformationForm.php">
                      Go Back
                      </a> 
                         
