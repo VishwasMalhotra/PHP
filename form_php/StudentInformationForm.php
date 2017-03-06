@@ -6,6 +6,7 @@ function echo_session_variable($key) {
    echo $_SESSION[$key];
  }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

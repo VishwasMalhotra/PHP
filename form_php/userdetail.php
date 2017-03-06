@@ -1,11 +1,12 @@
  <?php
    session_start();
+require 'facebook-sdk-v5/autoload.php';
     include("studentInfoConfig.php");
    $userdetail_id = $_GET['id'];
    if (!isset($userdetail_id)) {
       header("Location: login.php");
    }
-   if(!isset($_SESSION["login_username"]))
+   if(!isset($_SESSION["login_username"]) && !$_SESSION['fb_access_token'])
 {
     header("Location: login.php");
 }
@@ -24,6 +25,26 @@
    if (!is_numeric($userdetail_id) || !in_array($userdetail_id, $testarray )) {
       header ("Location: noinfo.php");
    }
+
+   if (isset($_SESSION['fb_access_token'])) {
+
+$fb = new Facebook\Facebook([
+  'app_id' => '1418910954831586',
+  'app_secret' => 'b262ab99f96d8d2287aee9a6b89029d9',
+  'default_graph_version' => 'v2.2',
+  ]);
+
+try {
+  $response = $fb->get('/me?fields=id,name', $_SESSION['fb_access_token']);
+} catch(Facebook\Exceptions\FacebookResponseException $e) {
+  echo 'Graph returned an error: ' . $e->getMessage();
+  exit;
+} catch(Facebook\Exceptions\FacebookSDKException $e) {
+  echo 'Facebook SDK returned an error: ' . $e->getMessage();
+  exit;
+}
+$user = $response->getGraphUser();
+}
    ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,7 +58,15 @@
    <body>
       <div class="container">
          <center>
-            <h2>Welcome <?php echo $_SESSION['login_username']; ?>!</h2>
+                     <h2>Welcome <?php 
+        if (isset($_SESSION['login_username'])) {
+        echo $_SESSION['login_username']; 
+        } else{
+          echo $user['name'];
+          
+        }
+
+        ?>!</h2> 
             <a class="btn btn-info" href = "welcome.php">Back to users</a>
             <a class="btn btn-danger" href = "logout.php">Sign Out</a>
          </center>

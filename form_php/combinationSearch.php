@@ -1,7 +1,7 @@
 <?php
  include("studentInfoConfig.php");
  session_start();
- if(!isset($_SESSION["login_username"])) 
+ if(!isset($_SESSION["login_username"]) && !$_SESSION['fb_access_token']) 
 {
 header('Location: login.php?redirect=combinationSearch.php');
 }
@@ -203,7 +203,6 @@ header('Location: login.php?redirect=combinationSearch.php');
                 }
                   }
                   else {
-                     // echo 'No Information Found';
                 ?>
                         <tr>
                        <td> 

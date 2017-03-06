@@ -1,7 +1,7 @@
  <?php
+   require 'facebook-sdk-v5/autoload.php';
    include("studentInfoConfig.php");
    session_start();
-
 
       $error = '';
 
@@ -25,6 +25,7 @@
          $error = "Your Login Name or Password is invalid";
       }
    }
+
 ?>
 <html>					   				
    <head>
@@ -67,12 +68,26 @@
                <form method = "post">
                   <label>UserName  :<br></label><input type = "text" name = "username" class = "box"/><br /><br />
                   <label>Password  :<br></label><input type = "password" name = "password" class = "box" /><br/><br />
-                  <input type = "submit" value = " Submit "/><br />
+                  <input class="btn btn-success" type = "submit" value = " Submit "/><br />
                </form>
-               <a href="forgotPassword.php">Forgot/Reset Password</a>
+               <a class="btn btn-danger" href="forgotPassword.php">Forgot/Reset Password</a>
+                  <br>
+                     <?php 
+                        $fb = new Facebook\Facebook ([
+                        'app_id' => '1418910954831586',
+                        'app_secret' => 'b262ab99f96d8d2287aee9a6b89029d9',
+                        'default_graph_version' => 'v2.5',
+                        ]);
+
+                        $helper = $fb->getRedirectLoginHelper();
+                        $permissions = ['email']; 
+                        $loginUrl = $helper->getLoginUrl('http://52.40.58.82/fb-callback.php', $permissions);
+                        echo "<br>".'<a class="btn btn-info" href="' . htmlspecialchars($loginUrl) . '">Log in with Facebook!</a>';
+                     ?>
                   <div style = "font-size:11px; color:#cc0000; margin-top:10px"><?php echo $error; ?></div>
             </div>
          </div>
       </div>
+
    </body>
 </html>
