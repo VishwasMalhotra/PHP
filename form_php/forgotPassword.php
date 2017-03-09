@@ -1,3 +1,12 @@
+<?php
+session_name('adminSession');
+session_start();
+echo $_SESSION["login_username"];
+if(isset($_SESSION["login_username"])) 
+{
+  header("Location: welcome.php");
+}
+?>
 <html>					   				
    <head>
       <title>Login Page</title>
@@ -28,7 +37,7 @@
             <div style = "margin:30px">
                <form name="ForgotPassword" action="changePassword.php" method = "post">
                   <label>Your Username  :<br></label><input type = "text" name = "username" class = "box"/><br /><br />
-                  <input type = "submit" value = "Sent Mail"/><br />
+                  <input type = "submit" value = "Send Mail"/><br />
                </form>
             </div>
          </div>

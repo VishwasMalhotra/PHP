@@ -287,9 +287,8 @@ if (!isset($_POST['submit'])) {
                   <div class="col-md-12">
                      <?php
                     if(isset($_SESSION['fileToUpload'])) {
-                               $pathString = $_SESSION['fileToUpload'];
-                             $cutpathString = substr($pathString, strpos($pathString, ".tmp") + 4);
-                      echo "You have selected the file :"."<label>".$cutpathString."</label>";
+                     $pathString = $_SESSION['fileNametoDisplay'];
+                      echo "You have selected the file :"."<label>".$pathString."</label>";
 
                     } else  {
 

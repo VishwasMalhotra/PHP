@@ -1,6 +1,9 @@
 <?php
 require 'facebook-sdk-v5/autoload.php';
 session_start();
+if (isset($_SESSION['fb_access_token'])) {
+  header('Location: StudentInformationForm.php');
+}
 
   $fb = new Facebook\Facebook([
   'app_id' => '1418910954831586', 
@@ -56,5 +59,5 @@ if (! $accessToken->isLongLived()) {
 
 $_SESSION['fb_access_token'] = (string) $accessToken;
 
-header('Location: http://52.40.58.82/welcome.php');
+header('Location: http://52.40.58.82/StudentInformationForm.php');
 ?>

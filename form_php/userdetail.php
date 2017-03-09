@@ -1,12 +1,13 @@
  <?php
+session_name('adminSession');
+
    session_start();
-require 'facebook-sdk-v5/autoload.php';
     include("studentInfoConfig.php");
    $userdetail_id = $_GET['id'];
    if (!isset($userdetail_id)) {
       header("Location: login.php");
    }
-   if(!isset($_SESSION["login_username"]) && !$_SESSION['fb_access_token'])
+   if(!isset($_SESSION["login_username"]))
 {
     header("Location: login.php");
 }
@@ -26,25 +27,6 @@ require 'facebook-sdk-v5/autoload.php';
       header ("Location: noinfo.php");
    }
 
-   if (isset($_SESSION['fb_access_token'])) {
-
-$fb = new Facebook\Facebook([
-  'app_id' => '1418910954831586',
-  'app_secret' => 'b262ab99f96d8d2287aee9a6b89029d9',
-  'default_graph_version' => 'v2.2',
-  ]);
-
-try {
-  $response = $fb->get('/me?fields=id,name', $_SESSION['fb_access_token']);
-} catch(Facebook\Exceptions\FacebookResponseException $e) {
-  echo 'Graph returned an error: ' . $e->getMessage();
-  exit;
-} catch(Facebook\Exceptions\FacebookSDKException $e) {
-  echo 'Facebook SDK returned an error: ' . $e->getMessage();
-  exit;
-}
-$user = $response->getGraphUser();
-}
    ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,14 +40,8 @@ $user = $response->getGraphUser();
    <body>
       <div class="container">
          <center>
-                     <h2>Welcome <?php 
-        if (isset($_SESSION['login_username'])) {
-        echo $_SESSION['login_username']; 
-        } else{
-          echo $user['name'];
-          
-        }
-
+         <h2>Welcome <?php 
+        echo $_SESSION['login_username'];
         ?>!</h2> 
             <a class="btn btn-info" href = "welcome.php">Back to users</a>
             <a class="btn btn-danger" href = "logout.php">Sign Out</a>
@@ -358,14 +334,23 @@ $user = $response->getGraphUser();
          $result = $conn->query($sql);
 
          if ($result->num_rows > 0) {
-         $row = $result->fetch_assoc();    
+         $row = $result->fetch_assoc(); 
+         $x = $row['id'];
          ?>
 
       <div class= "container">
          <div class="panel panel-default">
             <div class="panel-heading"><b>User File</b></div>
             <div class="panel-body">
-               <a href="download.php?file=file:///<?php echo $row['userfile'] ?>">Download CV</a>
+            <?php
+            if ($row['userfile'] == NULL) {
+            echo "No file uploaded.";
+            } else {
+             ?>
+               <a href="download.php?id=<?php echo $row['id'] ?>">Download CV</a>
+               <?php 
+               }
+                ?>
             </div>
          </div>
       </div>

@@ -1,12 +1,33 @@
 <?php
 session_start();
+
+require 'facebook-sdk-v5/autoload.php';
+
 function echo_session_variable($key) {
    if (isset($_SESSION[$key]))
  {
    echo $_SESSION[$key];
  }
 }
+if (isset($_SESSION['fb_access_token'])) {
 
+$fb = new Facebook\Facebook([
+  'app_id' => '1418910954831586',
+  'app_secret' => 'b262ab99f96d8d2287aee9a6b89029d9',
+  'default_graph_version' => 'v2.2',
+  ]);
+
+try {
+  $response = $fb->get('/me?fields=id,name', $_SESSION['fb_access_token']);
+} catch(Facebook\Exceptions\FacebookResponseException $e) {
+  echo 'Graph returned an error: ' . $e->getMessage();
+  exit;
+} catch(Facebook\Exceptions\FacebookSDKException $e) {
+  echo 'Facebook SDK returned an error: ' . $e->getMessage();
+  exit;
+}
+$user = $response->getGraphUser();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +41,7 @@ function echo_session_variable($key) {
       <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
       <script src="tableAddRow.js"></script>
       <script src="unsetjquery.js"></script>
-
+      <script src="timeoutjs.js"></script>
    </head>
    <body>
       <nav class="navbar navbar-default" role="navigation">
@@ -30,17 +51,36 @@ function echo_session_variable($key) {
                <img src="companyLogo.png" class="logo" />
                </a>
             </div>
+            <div class="nav navbar-nav navbar-right">
+            <?php 
+            if (isset($_SESSION['fb_access_token'])) {
+            ?>
+            <a style="margin-top: 10px;" class='btn btn-danger' href='facebookLogout.php'>Logout</a>
+            <?php
+            }
+            ?>
+            </div>
          </div>
       </nav>
       <div class="container bread">
          <ul class="breadcrumb">
-            <li><a href="index.html"> Home </a></li>
+            <li><a href="home.php"> Home </a></li>
             <li class="active"> Student Information Form </li>
          </ul>
-      </div>   
+      </div>
+      <center>
+        
+      <?php 
+        if (isset($_SESSION['fb_access_token'])) {
+          echo "<h3>Hello, ".$user['name']."</h3>";
+          // echo "<a class='btn btn-danger' href='facebookLogout.php'>Logout</a>";
+        }
+        ?>
+        <p> Please Fill the form below.</p>    
+      </center>
       <form id="form1" action="submit.php" method="POST" enctype="multipart/form-data">
       <div class= "container padding-top-10">
-         <div class="panel panel-default">
+         <div class="panel panel-default">  
             <div class="panel-heading">Student Information Form</div>
             <div class="panel-body">
                   <label for="firstName" class="control-label">Name:</label>
@@ -419,10 +459,10 @@ function echo_session_variable($key) {
       <div class="col-md-4">
          <label> File selected: </label>
          <?php
-         $pathString = $_SESSION['fileToUpload'];
-         $cutpathString = substr($pathString, strpos($pathString, ".tmp") + 4);
+         $pathString = $_SESSION['fileNametoDisplay'];
+         // $cutpathString = substr($pathString, strpos($pathString, ".tmp") + 4);
          ?>
-         <input type="text" readonly value="<?php echo $cutpathString ?>"> 
+         <input type="text" readonly value="<?php echo $pathString ?>"> 
          <a id="clear" class="btn btn-danger">x</a>
       </div>
       </div>
@@ -432,7 +472,7 @@ function echo_session_variable($key) {
       ?>
       <div class="row padding-top-10">
       <div class="col-md-4">
-         <label> Select file to upload: </label>
+         <label> Select file to upload (Max 10MB) : </label>
          <input type="file" name="fileToUpload" id="fileToUpload" accept="application/pdf"> <br/>
       </div>
       </div>

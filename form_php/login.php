@@ -1,8 +1,11 @@
  <?php
-   require 'facebook-sdk-v5/autoload.php';
    include("studentInfoConfig.php");
+   session_name('adminSession');
    session_start();
-
+if(isset($_SESSION["login_username"])) 
+{
+  header("Location: welcome.php");
+}
       $error = '';
 
       if($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -57,7 +60,7 @@
    <br>
       <div class="container bread">
          <ul class="breadcrumb">
-            <li><a href="index.html"> Home </a></li>
+            <li><a href="home.php"> Home </a></li>
             <li class="active"> Admin Login </li>
          </ul>
       </div> 	
@@ -72,18 +75,6 @@
                </form>
                <a class="btn btn-danger" href="forgotPassword.php">Forgot/Reset Password</a>
                   <br>
-                     <?php 
-                        $fb = new Facebook\Facebook ([
-                        'app_id' => '1418910954831586',
-                        'app_secret' => 'b262ab99f96d8d2287aee9a6b89029d9',
-                        'default_graph_version' => 'v2.5',
-                        ]);
-
-                        $helper = $fb->getRedirectLoginHelper();
-                        $permissions = ['email']; 
-                        $loginUrl = $helper->getLoginUrl('http://52.40.58.82/fb-callback.php', $permissions);
-                        echo "<br>".'<a class="btn btn-info" href="' . htmlspecialchars($loginUrl) . '">Log in with Facebook!</a>';
-                     ?>
                   <div style = "font-size:11px; color:#cc0000; margin-top:10px"><?php echo $error; ?></div>
             </div>
          </div>

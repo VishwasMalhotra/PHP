@@ -27,7 +27,11 @@ if (!isset($_POST['submit'])) {
                   die("Connection failed: " . $conn->connect_error);
                   } 
 
+                  if (isset($_SESSION['fileToUpload'])) {
                   $_SESSION['fileToUpload'] = $conn->real_escape_string($_SESSION['fileToUpload']);
+                  } else {
+                    $_SESSION['fileToUpload'] = NULL;
+                  }
 
                   $sql = "START TRANSACTION";
                   $conn->query($sql);
@@ -163,9 +167,6 @@ if (!isset($_POST['submit'])) {
   <hr>
   <p>
     Know more on <a href="http://52.40.58.82/">our website.</a>
-  </p>
-  <p class="lead">
-    <a class="btn btn-primary btn-sm" href="login.php" role="button">Continue to admin login</a>
   </p>
   </center>
 </div>  

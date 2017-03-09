@@ -1,9 +1,14 @@
 <?php  
+include("studentInfoConfig.php");
 header("Content-Type: application/octet-stream");
+$user_id = $_GET['id'];
+$sql = "SELECT userfile FROM users WHERE users.id = $user_id;";
+$result = $conn->query($sql);
+$row = $result->fetch_assoc();
 
-$file = $_GET["file"];
-
-header("Content-Disposition: attachment; filename=" . urlencode($file));   
+$file = $row['userfile'];
+header("Content-Disposition: attachment; filename=\"".basename($file)."\"");
+// header("Content-Disposition: attachment; filename=".basename($file)."");   
 header("Content-Type: application/octet-stream");
 header("Content-Type: application/download");
 header("Content-Description: File Transfer");            

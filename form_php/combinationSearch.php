@@ -1,7 +1,8 @@
 <?php
  include("studentInfoConfig.php");
+session_name('adminSession');
  session_start();
- if(!isset($_SESSION["login_username"]) && !$_SESSION['fb_access_token']) 
+ if(!isset($_SESSION["login_username"])) 
 {
 header('Location: login.php?redirect=combinationSearch.php');
 }
@@ -33,6 +34,13 @@ header('Location: login.php?redirect=combinationSearch.php');
             </div>
          </div>
       </nav>
+      <div class="container bread">
+         <ul class="breadcrumb">
+            <li><a href="home.php"> Home </a></li>
+            <li><a href="welcome.php"> Users </a></li>
+            <li class="active">Search Form</li>
+         </ul>
+      </div>      
       <form id="form1" action="combinationSearch.php" method="GET">
       <div class= "container padding-top-10">
          <div class="panel panel-default">
