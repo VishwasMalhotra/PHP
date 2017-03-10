@@ -1,4 +1,5 @@
 <?php
+session_name('adminSession');
 session_start();
    require 'facebook-sdk-v5/autoload.php';
 $fb = new Facebook\Facebook([

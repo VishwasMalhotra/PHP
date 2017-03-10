@@ -1,11 +1,21 @@
 <?php  
+session_name('adminSession');
+   session_start();
+if(((!isset($_SESSION['facebookEmail']) && !isset($_SESSION['login_username']))) && !isset($_SESSION['cookie_var']))
+{
+  header("Location: login.php");
+}
+if (isset($_SESSION['cookie_var'])) {
+if (!isset($_COOKIE["donotlogout"])) {
+  header('Location: logout.php');
+} 
+}
 include("studentInfoConfig.php");
 header("Content-Type: application/octet-stream");
 $user_id = $_GET['id'];
 $sql = "SELECT userfile FROM users WHERE users.id = $user_id;";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
-
 $file = $row['userfile'];
 header("Content-Disposition: attachment; filename=\"".basename($file)."\"");
 // header("Content-Disposition: attachment; filename=".basename($file)."");   

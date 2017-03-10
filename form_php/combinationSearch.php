@@ -2,9 +2,14 @@
  include("studentInfoConfig.php");
 session_name('adminSession');
  session_start();
- if(!isset($_SESSION["login_username"])) 
+if(((!isset($_SESSION['facebookEmail']) && !isset($_SESSION['login_username']))) && !isset($_SESSION['cookie_var']))
 {
 header('Location: login.php?redirect=combinationSearch.php');
+}
+if (isset($_SESSION['cookie_var'])) {
+if (!isset($_COOKIE["donotlogout"])) {
+  header('Location: logout.php');
+} 
 }
 ?>
 <!DOCTYPE html>

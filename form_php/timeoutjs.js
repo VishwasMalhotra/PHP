@@ -1,4 +1,4 @@
-    var timeout = 100;
+    var timeout = 110;
     var idleSeconds = 0;
     document.onclick = function() {
     idleSeconds = 0;
@@ -13,11 +13,8 @@
 
     function CheckIdleTime() {
         idleSeconds++;
-        var oPanel = document.getElementById("SecondsUntilExpire");
-        if (oPanel)
-        oPanel.innerHTML = (timeout - idleSeconds) + "";
         if (idleSeconds >= timeout) {
-        // alert("You were inactive for 2 minutes. You are being redirected to the home page.");
+        // alert("You were inactive for 15 seconds. You are being redirected to the home page.");
         document.location.href = "timeout.php";
         }
     }

@@ -1,10 +1,16 @@
 <?php
 include("studentInfoConfig.php");
+require 'facebook-sdk-v5/autoload.php';
 session_name('adminSession');
 session_start();
-if(!isset($_SESSION["login_username"])) 
+if(((!isset($_SESSION['facebookEmail']) && !isset($_SESSION['login_username']))) && !isset($_SESSION['cookie_var']))
 {
   header("Location: login.php");
+}
+if (isset($_SESSION['cookie_var'])) {
+if (!isset($_COOKIE["donotlogout"])) {
+  header('Location: logout.php');
+} 
 }
 ?>
 <!DOCTYPE html>
@@ -16,14 +22,22 @@ if(!isset($_SESSION["login_username"]))
       <link href="css/bootstrap.min.css" rel="stylesheet" />
       <link href="css/basic-template.css" rel="stylesheet" />
       <link rel="stylesheet" type="text/css" href="stylesheet.css" />
-
+      <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>      
+      <script src="timeoutjs.js"></script>
    </head>
    <body>   
 		<div class="container">
 		<center>
       	<h2>Welcome <?php 
-        echo $_SESSION['login_username']; 
-        ?>!</h2> 
+        if (isset($_SESSION['fb_access_token'])) {
+        echo $_SESSION['facebookName']; 
+        } if (isset($_COOKIE["donotlogout"])) {
+          echo $_COOKIE["donotlogout"];
+        }
+         else {
+          echo $_SESSION['login_username'];
+        }
+        ?>!</h2>
         <a class="btn btn-danger" href = "logout.php">Sign Out</a>
         <a class="btn btn-info" href = "combinationSearch.php">Search Form</a>
       	<hr>
@@ -128,7 +142,6 @@ if(!isset($_SESSION["login_username"]))
                             }
                               }
                   ?> 
-      	 <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
       <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
    </body>
 </html>

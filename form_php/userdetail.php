@@ -1,16 +1,20 @@
  <?php
 session_name('adminSession');
-
    session_start();
+if(((!isset($_SESSION['facebookEmail']) && !isset($_SESSION['login_username']))) && !isset($_SESSION['cookie_var']))
+{
+  header("Location: login.php");
+}
+if (isset($_SESSION['cookie_var'])) {
+if (!isset($_COOKIE["donotlogout"])) {
+  header('Location: logout.php');
+} 
+}
     include("studentInfoConfig.php");
    $userdetail_id = $_GET['id'];
    if (!isset($userdetail_id)) {
       header("Location: login.php");
    }
-   if(!isset($_SESSION["login_username"]))
-{
-    header("Location: login.php");
-}
 
    $testarray = array();
    $sql = "SELECT * FROM users";
@@ -36,12 +40,20 @@ session_name('adminSession');
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <link href="css/bootstrap.min.css" rel="stylesheet" />
       <link href="css/basic-template.css" rel="stylesheet" />
+      <script src="timeoutjs.js"></script>
    </head>
    <body>
       <div class="container">
          <center>
          <h2>Welcome <?php 
-        echo $_SESSION['login_username'];
+        if (isset($_SESSION['fb_access_token'])) {
+        echo $_SESSION['facebookName']; 
+        } if (isset($_COOKIE["donotlogout"])) {
+          echo $_COOKIE["donotlogout"];
+        }
+         else {
+          echo $_SESSION['login_username'];
+        }
         ?>!</h2> 
             <a class="btn btn-info" href = "welcome.php">Back to users</a>
             <a class="btn btn-danger" href = "logout.php">Sign Out</a>

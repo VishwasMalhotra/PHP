@@ -1,4 +1,5 @@
 <?php
+session_name('adminSession');
 session_start();
    require 'facebook-sdk-v5/autoload.php';
 $fb = new Facebook\Facebook([
@@ -7,7 +8,7 @@ $fb = new Facebook\Facebook([
   'default_graph_version' => 'v2.2',
   ]);
 unset($_SESSION['fb_access_token']);
-session_destroy();
+// session_destroy();
 echo $_SESSION['fb_access_token'];
 header('Location: home.php');
 

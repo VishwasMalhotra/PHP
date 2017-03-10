@@ -1,32 +1,11 @@
 <?php
 session_start();
-
 require 'facebook-sdk-v5/autoload.php';
-
 function echo_session_variable($key) {
    if (isset($_SESSION[$key]))
  {
    echo $_SESSION[$key];
  }
-}
-if (isset($_SESSION['fb_access_token'])) {
-
-$fb = new Facebook\Facebook([
-  'app_id' => '1418910954831586',
-  'app_secret' => 'b262ab99f96d8d2287aee9a6b89029d9',
-  'default_graph_version' => 'v2.2',
-  ]);
-
-try {
-  $response = $fb->get('/me?fields=id,name', $_SESSION['fb_access_token']);
-} catch(Facebook\Exceptions\FacebookResponseException $e) {
-  echo 'Graph returned an error: ' . $e->getMessage();
-  exit;
-} catch(Facebook\Exceptions\FacebookSDKException $e) {
-  echo 'Facebook SDK returned an error: ' . $e->getMessage();
-  exit;
-}
-$user = $response->getGraphUser();
 }
 ?>
 <!DOCTYPE html>
@@ -41,7 +20,6 @@ $user = $response->getGraphUser();
       <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
       <script src="tableAddRow.js"></script>
       <script src="unsetjquery.js"></script>
-      <script src="timeoutjs.js"></script>
    </head>
    <body>
       <nav class="navbar navbar-default" role="navigation">
@@ -69,13 +47,6 @@ $user = $response->getGraphUser();
          </ul>
       </div>
       <center>
-        
-      <?php 
-        if (isset($_SESSION['fb_access_token'])) {
-          echo "<h3>Hello, ".$user['name']."</h3>";
-          // echo "<a class='btn btn-danger' href='facebookLogout.php'>Logout</a>";
-        }
-        ?>
         <p> Please Fill the form below.</p>    
       </center>
       <form id="form1" action="submit.php" method="POST" enctype="multipart/form-data">
