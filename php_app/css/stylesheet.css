@@ -1,0 +1,95 @@
+         .logo {
+             width: 100px;
+         }
+         .padding-top-10 {
+             padding-top: 10px;
+         }
+         select {
+             width: 110px;
+             font-family: tahoma;
+             font-size: 13px;
+             border-radius: 15px;
+             color: #6f6f6f;
+         }
+         #educationQualification {
+             border-radius: 5px;
+             width: 200px;
+             font-family: tahoma;
+             font-size: 15px;
+             color: #6f6f6f;
+         }
+         input.table {
+             display: block;
+             padding: 0;
+             margin: 0;
+             border: 0;
+             width: 100%;
+         }
+         td {
+             margin: 0;
+             padding: 0;
+         }
+         .submit {
+             width: 100%;
+             font-size: 20px;
+         }
+        .footer-bottom {
+            background: #E3E3E3;
+            border-top: 1px solid #DDDDDD;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        .footer-bottom p.pull-left {
+            padding-top: 6px;
+        }
+         .box {
+            border:#666666 solid 1px;
+         }
+        .login_body {
+            font-family:Arial, Helvetica, sans-serif;
+            font-size:14px;
+         } 
+         .login_label {
+            font-weight:bold;
+            width:100px;
+            font-size:14px;
+         }   
+         #main_login{
+            width:300px;
+            border: solid 1px #333333;
+            text-align: left;
+         }  
+         #login_text {
+            background-color:#333333;
+            color:#FFFFFF; 
+            padding:3px;
+         }
+         #login_container {
+             margin:30px;
+         }
+         #login_error {
+            font-size:11px;
+            color:#cc0000; 
+            margin-top:10px;
+         }
+         .forgot_body{
+            font-family:Arial, Helvetica, sans-serif;
+            font-size:14px;
+         }
+         #forgot_label{
+            font-weight:bold;
+            width:100px;
+            font-size:14px;
+         }
+        .box {
+            border:#666666 solid 1px;
+         }
+         #forgot_container {
+            width:300px;
+            border: solid 1px #333333;
+            text-align: left;
+         }
+         #forgot_line{
+            color:black; 
+            padding:3px;
+         }
